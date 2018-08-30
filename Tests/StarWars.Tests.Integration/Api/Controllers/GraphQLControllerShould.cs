@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Text;
 using Newtonsoft.Json.Linq;
 using Xunit;
+using Microsoft.AspNetCore.Hosting;
 
 namespace StarWars.Tests.Integration.Api.Controllers
 {
@@ -25,7 +26,40 @@ namespace StarWars.Tests.Integration.Api.Controllers
 
         public HttpClient GetUnauthenticatedClient()
         {
-            return _factory.CreateClient();
+            var client = _factory.WithWebHostBuilder(builder =>
+            {
+                builder.UseEnvironment("Test");
+                //builder.ConfigureServices(services =>
+                //{
+                //    //var serviceProvider = services.BuildServiceProvider();
+
+                //    //using (var scope = serviceProvider.CreateScope())
+                //    //{
+                //    //    var scopedServices = scope.ServiceProvider;
+                //    //    var db = scopedServices
+                //    //        .GetRequiredService<ApplicationDbContext>();
+                //    //    var logger = scopedServices
+                //    //        .GetRequiredService<ILogger<IndexPageTests>>();
+
+                //    //    try
+                //    //    {
+                //    //        Utilities.InitializeDbForTests(db);
+                //    //    }
+                //    //    catch (Exception ex)
+                //    //    {
+                //    //        logger.LogError(ex, "An error occurred seeding " +
+                //    //            "the database with test messages. Error: " +
+                //    //            ex.Message);
+                //    //    }
+                //    //}
+                //});
+            })
+                .CreateClient(new WebApplicationFactoryClientOptions
+                {
+                    AllowAutoRedirect = false
+                });
+
+            return client;
         }
 
         // https://github.com/graphql-dotnet/graphql-dotnet#usage
