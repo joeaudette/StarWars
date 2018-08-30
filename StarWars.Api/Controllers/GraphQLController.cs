@@ -16,7 +16,10 @@ namespace StarWars.Api.Controllers
         private ISchema _schema { get; set; }
         private readonly ILogger _logger;
 
-        public GraphQLController(IDocumentExecuter documentExecuter, ISchema schema, ILogger<GraphQLController> logger)
+        public GraphQLController(
+            IDocumentExecuter documentExecuter, 
+            ISchema schema, 
+            ILogger<GraphQLController> logger)
         {
             _documentExecuter = documentExecuter;
             _schema = schema;

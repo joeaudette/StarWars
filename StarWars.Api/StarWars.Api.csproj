@@ -15,7 +15,7 @@
     <ProjectReference Include="..\StarWars.Data\StarWars.Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
+  <ItemGroup Label="Package References">
     <PackageReference Include="Microsoft.AspNetCore.App"  />
     
     <PackageReference Include="AutoMapper" Version="6.0.2" />

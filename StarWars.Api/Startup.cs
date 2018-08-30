@@ -13,30 +13,27 @@ using StarWars.Data.EntityFramework.Repositories;
 using GraphQL.Types;
 using GraphQL;
 using StarWars.Core.Logic;
+using Microsoft.AspNetCore.Mvc;
 
 namespace StarWars.Api
 {
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables();
-            Configuration = builder.Build();
+
+            Configuration = configuration;
             Env = env;
         }
 
-        public IConfigurationRoot Configuration { get; }
+        public IConfiguration Configuration { get; }
         private IHostingEnvironment Env { get; set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddMvc();
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddAutoMapper(typeof(Startup));
 
             services.AddScoped<StarWarsQuery>();            
@@ -65,16 +62,12 @@ namespace StarWars.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env,
-                              ILoggerFactory loggerFactory, StarWarsContext db)
+        public void Configure(IApplicationBuilder app)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
-
             app.UseStaticFiles();
             app.UseMvc();
 
-            db.EnsureSeedData();
+            
         }
     }
 }

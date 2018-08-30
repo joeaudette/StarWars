@@ -10,7 +10,7 @@ namespace StarWars.Tests.Integration.Api.Controllers
 {
     public class GraphQLControllerShould : IClassFixture<StarWars.Api.Startup>
     {
-        private readonly HttpClient _client;
+        //private readonly HttpClient _client;
         private readonly WebApplicationFactory<StarWars.Api.Startup> _factory;
 
         public GraphQLControllerShould(WebApplicationFactory<StarWars.Api.Startup> factory)
@@ -20,7 +20,12 @@ namespace StarWars.Tests.Integration.Api.Controllers
             //    .UseStartup<Startup>()
             //);
             _factory = factory;
-            _client = factory.CreateClient();
+           // _client = factory.CreateClient();
+        }
+
+        public HttpClient GetUnauthenticatedClient()
+        {
+            return _factory.CreateClient();
         }
 
         // https://github.com/graphql-dotnet/graphql-dotnet#usage
@@ -32,7 +37,7 @@ namespace StarWars.Tests.Integration.Api.Controllers
         //   }
         // }
         [Fact]
-        [Trait("test", "integration")]
+       // [Trait("test", "integration")]
         public async void ReturnR2D2Droid()
         {
             // Given
@@ -42,6 +47,7 @@ namespace StarWars.Tests.Integration.Api.Controllers
             var content = new StringContent(query, Encoding.UTF8, "application/json");
 
             // When
+            var _client = GetUnauthenticatedClient();
             var response = await _client.PostAsync("/graphql", content);
 
             // Then
@@ -78,6 +84,7 @@ namespace StarWars.Tests.Integration.Api.Controllers
             var content = new StringContent(query, Encoding.UTF8, "application/json");
 
             // When
+            var _client = GetUnauthenticatedClient();
             var response = await _client.PostAsync("/graphql", content);
 
             // Then
@@ -131,6 +138,7 @@ namespace StarWars.Tests.Integration.Api.Controllers
             var content = new StringContent(query, Encoding.UTF8, "application/json");
 
             // When
+            var _client = GetUnauthenticatedClient();
             var response = await _client.PostAsync("/graphql", content);
 
             // Then
@@ -205,6 +213,7 @@ namespace StarWars.Tests.Integration.Api.Controllers
             var content = new StringContent(query, Encoding.UTF8, "application/json");
 
             // When
+            var _client = GetUnauthenticatedClient();
             var response = await _client.PostAsync("/graphql", content);
 
             // Then
@@ -245,6 +254,7 @@ namespace StarWars.Tests.Integration.Api.Controllers
             var content = new StringContent(query, Encoding.UTF8, "application/json");
 
             // When
+            var _client = GetUnauthenticatedClient();
             var response = await _client.PostAsync("/graphql", content);
 
             // Then
@@ -278,6 +288,7 @@ namespace StarWars.Tests.Integration.Api.Controllers
             var content = new StringContent(query, Encoding.UTF8, "application/json");
 
             // When
+            var _client = GetUnauthenticatedClient();
             var response = await _client.PostAsync("/graphql", content);
 
             // Then
@@ -317,6 +328,7 @@ namespace StarWars.Tests.Integration.Api.Controllers
             var content = new StringContent(query, Encoding.UTF8, "application/json");
 
             // When
+            var _client = GetUnauthenticatedClient();
             var response = await _client.PostAsync("/graphql", content);
 
             // Then
@@ -361,6 +373,7 @@ namespace StarWars.Tests.Integration.Api.Controllers
             var content = new StringContent(query, Encoding.UTF8, "application/json");
 
             // When
+            var _client = GetUnauthenticatedClient();
             var response = await _client.PostAsync("/graphql", content);
 
             // Then
@@ -410,6 +423,7 @@ namespace StarWars.Tests.Integration.Api.Controllers
             var content = new StringContent(query, Encoding.UTF8, "application/json");
 
             // When
+            var _client = GetUnauthenticatedClient();
             var response = await _client.PostAsync("/graphql", content);
 
             // Then
@@ -448,6 +462,7 @@ namespace StarWars.Tests.Integration.Api.Controllers
             var content = new StringContent(query, Encoding.UTF8, "application/json");
 
             // When
+            var _client = GetUnauthenticatedClient();
             var response = await _client.PostAsync("/graphql", content);
 
             // Then
@@ -484,6 +499,7 @@ namespace StarWars.Tests.Integration.Api.Controllers
             var content = new StringContent(query, Encoding.UTF8, "application/json");
 
             // When
+            var _client = GetUnauthenticatedClient();
             var response = await _client.PostAsync("/graphql", content);
 
             // Then
