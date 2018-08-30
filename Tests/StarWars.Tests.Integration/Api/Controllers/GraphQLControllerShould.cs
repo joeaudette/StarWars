@@ -1,6 +1,5 @@
 ﻿using System.Linq;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.TestHost;
+using Microsoft.AspNetCore.Mvc.Testing;
 using StarWars.Api;
 using System.Net.Http;
 using System.Text;
@@ -9,17 +8,19 @@ using Xunit;
 
 namespace StarWars.Tests.Integration.Api.Controllers
 {
-    public class GraphQLControllerShould
+    public class GraphQLControllerShould : IClassFixture<StarWars.Api.Startup>
     {
         private readonly HttpClient _client;
+        private readonly WebApplicationFactory<StarWars.Api.Startup> _factory;
 
-        public GraphQLControllerShould()
+        public GraphQLControllerShould(WebApplicationFactory<StarWars.Api.Startup> factory)
         {
-            var server = new TestServer(new WebHostBuilder()
-                .UseEnvironment("Test")
-                .UseStartup<Startup>()
-            );
-            _client = server.CreateClient();
+            //var server = new TestServer(new WebHostBuilder()
+            //    .UseEnvironment("Test")
+            //    .UseStartup<Startup>()
+            //);
+            _factory = factory;
+            _client = factory.CreateClient();
         }
 
         // https://github.com/graphql-dotnet/graphql-dotnet#usage
